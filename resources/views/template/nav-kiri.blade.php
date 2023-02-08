@@ -2,16 +2,16 @@
       <div class="position-sticky pt-3 sidebar-sticky">
         <ul class="nav flex-column">
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="/home">
+                <a class="nav-link {{(Request::segment(1) == 'home') ? 'active' : null }}" aria-current="page" href="/home">
                   <span data-feather="home" class="align-text-bottom"></span>
-                  <i class = "fa-solid fa-house"></i>
+                  <i class = "fa-solid fa-fw fa-house"></i>
                   Home
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="{{route('master')}}">
+                <a class="nav-link {{(Request::segment(1) == 'master') ? 'active' : null }}" href="{{route('master')}}">
                   <span data-feather="file" class="align-text-bottom"></span>
-                  <i class="fa-solid fa-database"></i>
+                  <i class="fa-solid fa-fw fa-database"></i>
                   Master Data
                 </a>
               </li>

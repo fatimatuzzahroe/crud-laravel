@@ -1,4 +1,5 @@
 @extends('tampilan-utama')
 @section('konten')
-Mater AMG
+Mater AMG <br>
+
 @endsection
