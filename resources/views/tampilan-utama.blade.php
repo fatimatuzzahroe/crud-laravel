@@ -8,12 +8,13 @@
     <meta name="generator" content="Hugo 0.104.2">
     <title>Dashboard Template · Bootstrap v5.2</title>
 
-    <script src="../build/assets/app-b44a8b59.js"></script>
-    <script src="../build/fontawesome-6.2.1/js/all.min.js"></script>
+    <script src="{{ asset('build/assets/app-b44a8b59.js') }}"></script>
+    <script src="{{ asset('build/fontawesome-6.2.1/js/all.min.js') }}"></script>
 
-    <link href="../build/assets/app-67dcdfd2.css" rel="stylesheet">
-    <link href="../build/assets/dashboard.css" rel="stylesheet">
-    <link href="../build/fontawesome-6.2.1/css/all.min.css" rel="stylesheet">
+    <link href="{{ asset('build/assets/app-67dcdfd2.css') }}" rel="stylesheet">
+    
+    <link href="{{ asset('build/assets/dashboard.css') }}" rel="stylesheet">
+    <link href="{{ asset('build/fontawesome-6.2.1/css/all.min.css') }}" rel="stylesheet">
 
     <style>
       .bd-placeholder-img {
@@ -80,7 +81,7 @@
   <div class="row">
    
   @include('template.nav-kiri')
-    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 mt-4">
       @yield('konten')
     </main>
   </div>
