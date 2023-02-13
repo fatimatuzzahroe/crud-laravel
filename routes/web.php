@@ -24,4 +24,5 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('/master', [MasterController::class, 'index'])->name('master');
 Route::get('/master/cabang', [MasterController::class, 'cabang'])->name('master-cabang');
 Route::get('/master/cabang/tambah', [MasterController::class, 'cabang_tambah'])->name('master-cabang-tambah');
+Route::get('/master/cabang/simpan', [MasterController::class, 'cabang_simpan'])->name('master-cabang-simpan');
 Route::get('/master/menuresto', [MasterController::class, 'menuresto'])->name('master-menuresto');
