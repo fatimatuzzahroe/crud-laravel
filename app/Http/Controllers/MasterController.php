@@ -67,6 +67,47 @@ class MasterController extends Controller
 
     }
 
+    public function cabang_edit($kode)
+    {
+        $cabang = DB::table('m_cabang')->where('kode_cabang', $kode)->get()->first();
+        return view('master.cabang.edit', compact('cabang'));
+    }
+
+
+    public function cabang_update($kode, Request $request)
+    {
+       
+        $aturan = [
+           
+            'form_nama_cabang' => 'required|min:5',
+            'form_notelp_cabang' => 'numeric',
+            'form_alamat_cabang' => 'required',
+        ];
+        $pesan = [
+           
+            'form_notelp_cabang.numeric' => 'Nomor telpon harus angka !!',
+        ];
+        $validator = Validator::make($request->all(), $aturan, $pesan);
+        try {
+            if ($validator->fails()) {
+                return redirect()->route('master-cabang-edit',[$kode])->withErrors($validator)->withInput();
+            } else {
+                $update = DB::table('m_cabang')->where('kode_cabang', $kode)->update([
+                    'nama_cabang'   => $request->input('form_nama_cabang'),
+                    'no_telp'       => $request->input('form_notelp_cabang'),
+                    'alamat'        => $request->input('form_alamat_cabang'),
+                    'updated_date'  => date('Y-m-d H:i:s'),
+                ]);
+                if ($update) {
+                    return redirect()->route('master-cabang')->with('success', 'Berhasil update restoran '.$kode.'!');
+                }
+            }
+        } catch (\Throwable $th) {
+            return redirect()->route('master-cabang-edit',[$kode])->withErrors($th->getMessage())->withInput();
+        }
+    
+    }
+
     public function menuresto()
     {
         return view('master.menuresto.index');
