@@ -23,18 +23,39 @@ class TransaksiController extends Controller
 
 
 
-    public function sales()
+    public function sales($kode_cabang = null)
     {
+        $transaksimodel = new TransaksiModel();
         $data = [
             'kode_cabang' => DB::table('m_cabang')->get(),
-            'kode_menu' => DB::table('m_menu')->get(),
+            'kode_menu' => ($kode_cabang) ? $transaksimodel->ambil_stok_per_cabang($kode_cabang) : null,
         ];
         return view('transaksi/sales/index', compact('data'));
     }
 
-    public function sales_jual(Request $request)
+    public function sales_jual($kode_cabang, Request $request)
     {
-        echo 'barang sudah terjual';
+        $transaksimodel = new TransaksiModel();
+        $kode_menu      = $request->input('form_kode_menu');
+        $jumlah_beli    = $request->input('form_jumlah');
+        $cek_stok       = $transaksimodel->cek_stok($kode_cabang, $kode_menu);
+        $stok_tersedia  = $cek_stok[0]->qty;
+        $sisa_stok      = $stok_tersedia - $jumlah_beli;
+        if ( ($sisa_stok) > 0 ) {
+            $kode_status = 'SLS';
+            $insertdata = $transaksimodel->insert_transaksi_penjualan($kode_cabang, $kode_menu, $jumlah_beli, $sisa_stok, $kode_status);
+            // if (!$insertdata) {
+            //     return redirect()->route('transaksi-sales')->with('success', 'Transaksi Berhasil !');
+            // }
+        } elseif ( ($sisa_stok) == 0) {
+            $kode_status = 'SLD';
+            $insertdata = $transaksimodel->insert_transaksi_penjualan($kode_cabang, $kode_menu, $jumlah_beli, $sisa_stok, $kode_status);
+            // if ($insertdata) {
+            //     return redirect()->route('transaksi-sales')->with('success', 'Transaksi Berhasil !');
+            // }
+        } else {
+            echo 'Error! Jumlah beli melebihi stok tersedia';
+        }
     }
 
 
